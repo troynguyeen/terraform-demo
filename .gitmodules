@@ -1,3 +1,0 @@
-[submodule "demo-s3statelocking/learn-terraform-provision-eks-cluster"]
-	path = demo-s3statelocking/learn-terraform-provision-eks-cluster
-	url = https://github.com/hashicorp-education/learn-terraform-provision-eks-cluster
