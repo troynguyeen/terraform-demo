@@ -1,0 +1,5 @@
+bucket       = "demo2025-tf-bucket"
+key          = "eks/terraform.tfstate"
+region       = "ap-southeast-1"
+encrypt      = false
+use_lockfile = true
