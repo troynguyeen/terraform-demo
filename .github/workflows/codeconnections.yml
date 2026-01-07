@@ -120,7 +120,7 @@ jobs:
         run: exit 1
 
       - name: Manual Approval
-        if: github.ref_name == 'main' && github.event_name == 'pull_request'
+        if: github.ref_name == 'main' && github.event_name == 'push'
         uses: trstringer/manual-approval@v1
         with:
           secret: ${{ secrets.GITHUB_TOKEN }}
@@ -133,6 +133,6 @@ jobs:
           exclude-workflow-initiator-as-approver: false
 
       - name: Terraform Apply
-        if: github.ref_name == 'main' && github.event_name == 'pull_request'
+        if: github.ref_name == 'main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
         working-directory: ${{ env.TF_WORKING_DIR }}
