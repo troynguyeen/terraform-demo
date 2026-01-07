@@ -6,11 +6,13 @@ on:
       - main
     paths:
       - demo-codeconnections/**
+      - .github/workflows/codeconnections.yml
   pull_request:
     branches:
       - main
     paths:
       - demo-codeconnections/**
+      - .github/workflows/codeconnections.yml
 
 env:
   TF_WORKING_DIR: demo-codeconnections
@@ -118,21 +120,19 @@ jobs:
         run: exit 1
 
       - name: Manual Approval
+        if: github.ref_name == 'main' && github.event_name == 'pull_request'
         uses: trstringer/manual-approval@v1
         with:
           secret: ${{ secrets.GITHUB_TOKEN }}
           approvers: troynguyeen
           minimum-approvals: 1
-          issue-title: "Deploying CodeConnections Terraform to ${{ env.TF_WORKSPACE_ENV }}"
+          issue-title: "Deploying CodeConnections Terraform to ${{ env.TF_WORKSPACE_ENV }} on branch $GITHUB_REF_NAME"
           issue-body: |
             Approval keywords - "approve", "approved", "lgtm", "yes"
             Denied keywords - "deny", "denied", "no"
           exclude-workflow-initiator-as-approver: false
 
-      - name: After approval
-        run: echo "Manual approval success, proceeding to apply Terraform changes..."
-
       - name: Terraform Apply
-        if: github.ref == 'main' && github.event_name == 'push'
+        if: github.ref_name == 'main' && github.event_name == 'pull_request'
         run: terraform apply -auto-approve -input=false
         working-directory: ${{ env.TF_WORKING_DIR }}
