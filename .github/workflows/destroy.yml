@@ -1,0 +1,73 @@
+name: ☠️ Terraform Destroy
+
+on:
+  workflow_dispatch:
+    inputs:
+      terraform_dir:
+        description: "Terraform directory location"
+        required: true
+        default: ""
+      confirm_destroy:
+        description: "Type DESTROY to confirm Terraform destroy"
+        required: true
+        default: ""
+      environment:
+        description: "Target environment"
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+env:
+  TF_WORKING_DIR: ${{ github.event.inputs.terraform_dir }}
+  TF_LOG: INFO
+  BUCKET_TF_STATE: demo-terraform-backend-state
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  
+jobs:
+  terraform_destroy:
+    name: Terraform Destroy
+    runs-on: ubuntu-latest
+    if: github.event.inputs.confirm_destroy == 'DESTROY'
+    environment: ${{ github.event.inputs.environment }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.14.0
+
+      - name: Terraform init
+        id: init
+        run: terraform init -backend-config="bucket=$BUCKET_TF_STATE"
+        working-directory: ${{ env.TF_WORKING_DIR }}
+
+      - name: Terraform workspace
+        id: workspace
+        run: |
+          terraform workspace select -or-create=true ${{ github.event.inputs.environment }}
+          terraform workspace list
+        working-directory: ${{ env.TF_WORKING_DIR }}
+
+      - name: Manual Approval Destroy
+        id: approval
+        if: github.event.inputs.confirm_destroy == 'DESTROY' && github.ref == 'refs/heads/main'
+        uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ secrets.GITHUB_TOKEN }}
+          approvers: troynguyeen
+          minimum-approvals: 1
+          issue-title: "Final step to confirm Terraform destroy from ${{ github.event.inputs.environment }} on branch ${{ github.ref_name }}"
+          issue-body: |
+            Approval keywords - "approve", "approved", "lgtm", "yes"
+            Denied keywords - "deny", "denied", "no"
+          exclude-workflow-initiator-as-approver: false
+
+      - name: Terraform Destroy
+        if: steps.approval.outputs.approval-status == 'approved'
+        run: terraform destroy -auto-approve
+        working-directory: ${{ env.TF_WORKING_DIR }}

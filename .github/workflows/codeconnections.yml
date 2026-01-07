@@ -120,19 +120,20 @@ jobs:
         run: exit 1
 
       - name: Manual Approval
-        if: github.ref_name == 'main' && github.event_name == 'push'
+        id: approval
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: trstringer/manual-approval@v1
         with:
           secret: ${{ secrets.GITHUB_TOKEN }}
           approvers: troynguyeen
           minimum-approvals: 1
-          issue-title: "Deploying CodeConnections Terraform to ${{ env.TF_WORKSPACE_ENV }} on branch $GITHUB_REF_NAME"
+          issue-title: "Deploying CodeConnections Terraform to ${{ env.TF_WORKSPACE_ENV }} on branch ${{ github.ref_name }}"
           issue-body: |
             Approval keywords - "approve", "approved", "lgtm", "yes"
             Denied keywords - "deny", "denied", "no"
           exclude-workflow-initiator-as-approver: false
 
       - name: Terraform Apply
-        if: github.ref_name == 'main' && github.event_name == 'push'
+        if: steps.approval.outputs.approval-status == 'approved'
         run: terraform apply -auto-approve -input=false
         working-directory: ${{ env.TF_WORKING_DIR }}
