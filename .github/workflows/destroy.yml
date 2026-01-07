@@ -53,6 +53,10 @@ jobs:
           terraform workspace list
         working-directory: ${{ env.TF_WORKING_DIR }}
 
+      - name: Terraform Plan (Destroy)
+        run: terraform plan -destroy
+        working-directory: ${{ env.TF_WORKING_DIR }}
+
       - name: Manual Approval Destroy
         id: approval
         if: github.event.inputs.confirm_destroy == 'DESTROY' && github.ref == 'refs/heads/main'
