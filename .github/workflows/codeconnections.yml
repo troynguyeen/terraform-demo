@@ -6,11 +6,13 @@ on:
       - main
     paths:
       - demo-codeconnections/**
+      - .github/workflows/codeconnections.yml
   pull_request:
     branches:
       - main
     paths:
       - demo-codeconnections/**
+      - .github/workflows/codeconnections.yml
 
 env:
   TF_WORKING_DIR: demo-codeconnections
