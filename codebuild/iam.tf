@@ -154,7 +154,7 @@ locals {
           "codeconnections:GetConnection"
         ]
         resources = [
-            "arn:aws:codeconnections:${var.region}:${data.aws_caller_identity.current.account_id}:connection/*"
+          "arn:aws:codeconnections:${var.region}:${data.aws_caller_identity.current.account_id}:connection/*"
         ]
       }
     ]
