@@ -12,9 +12,11 @@ data "aws_subnets" "subnets" {
   }
 }
 
-data "aws_security_group" "sgs" {
+data "aws_security_groups" "sgs" {
   filter {
     name   = "tag:Name"
     values = ["caching-sg"]
   }
 }
+
+data "aws_caller_identity" "current" {}

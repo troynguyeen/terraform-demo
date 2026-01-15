@@ -1,4 +1,4 @@
-name: 🎏 CodeBuild CI/CD Terraform
+name: 🎰 CodeBuild CI/CD Terraform
 
 on:
   push:

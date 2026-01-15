@@ -20,7 +20,7 @@ resource "aws_iam_role_policy" "inline" {
   for_each = local.inline_policy_statements
   name     = each.key
   role     = aws_iam_role.role.id
-  policy   = data.aws_iam_policy_document.inline.json
+  policy   = data.aws_iam_policy_document.inline[each.key].json
 }
 
 data "aws_iam_policy_document" "inline" {
@@ -28,8 +28,8 @@ data "aws_iam_policy_document" "inline" {
   dynamic "statement" {
     for_each = each.value
     content {
-      sid       = statement.value.sid
-      effect    = statement.value.effect
+      sid       = lookup(statement.value, "sid", null)
+      effect    = lookup(statement.value, "effect", null)
       actions   = statement.value.actions
       resources = statement.value.resources
       dynamic "condition" {
@@ -135,11 +135,11 @@ locals {
           "sts:GetServiceBearerToken",
         ]
         resources = ["*"]
-        condition = {
+        condition = [{
           test     = "StringEquals"
           variable = "sts:AWSServiceName"
           values   = ["codeartifact.amazonaws.com"]
-        }
+        }]
       }
     ]
     # CodeConnections = [

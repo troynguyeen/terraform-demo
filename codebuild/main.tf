@@ -55,7 +55,7 @@ resource "aws_codebuild_project" "demo-codebuild" {
   vpc_config {
     vpc_id             = data.aws_vpc.demo_vpc.id
     subnets            = data.aws_subnets.subnets.ids
-    security_group_ids = data.aws_security_group.sgs.ids
+    security_group_ids = data.aws_security_groups.sgs.ids
   }
 
   tags = {
