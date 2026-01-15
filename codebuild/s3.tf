@@ -11,5 +11,5 @@ resource "aws_s3_bucket_acl" "artifacts" {
 }
 
 locals {
-  bucket_name = "codebuild-artifacts-s3"
+  bucket_name = "demo-codebuild-artifacts-s3"
 }

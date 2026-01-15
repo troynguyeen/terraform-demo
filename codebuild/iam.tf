@@ -145,19 +145,19 @@ locals {
         }]
       }
     ]
-    # CodeConnections = [
-    #   {
-    #     sid    = "AllowCodeConnectionsAccess"
-    #     effect = "Allow"
-    #     actions = [
-    #       "codeconnections:GetConnectionToken",
-    #       "codeconnections:GetConnection"
-    #     ]
-    #     resources = [
-    #         "arn:aws:codeconnections:${var.region}:${data.aws_caller_identity.current.account_id}:connection/*"
-    #     ]
-    #   }
-    # ]
+    CodeConnections = [
+      {
+        sid    = "AllowCodeConnectionsAccess"
+        effect = "Allow"
+        actions = [
+          "codeconnections:GetConnectionToken",
+          "codeconnections:GetConnection"
+        ]
+        resources = [
+          "arn:aws:codeconnections:${var.region}:${data.aws_caller_identity.current.account_id}:connection/*"
+        ]
+      }
+    ]
     KMS = [
       {
         sid    = "AllowKMSAccess"
