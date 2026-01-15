@@ -44,7 +44,7 @@ resource "aws_codebuild_project" "demo-codebuild" {
 
   source {
     type                = "GITHUB"
-    location            = "https://github.com/mitchellh/packer.git"
+    location            = "https://github.com/troynguyeen/terraform-demo.git"
     report_build_status = true
     auth {
       type     = "CODECONNECTIONS"
