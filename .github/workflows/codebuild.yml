@@ -5,17 +5,17 @@ on:
     branches:
       - main
     paths:
-      - codebuild/**
+      - demo-codebuild/**
       - .github/workflows/codebuild.yml
   pull_request:
     branches:
       - main
     paths:
-      - codebuild/**
+      - demo-codebuild/**
       - .github/workflows/codebuild.yml
 
 env:
-  TF_WORKING_DIR: codebuild
+  TF_WORKING_DIR: demo-codebuild
   TF_LOG: INFO
   BUCKET_TF_STATE: demo-terraform-backend-state
   TF_WORKSPACE_ENV: "dev"
