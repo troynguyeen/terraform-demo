@@ -21,6 +21,7 @@ env:
   TF_WORKSPACE_ENV: "dev"
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  TOKEN: ${{ secrets.TF_GITHUB_TOKEN }}
 
 jobs:
   terraform:
@@ -50,7 +51,7 @@ jobs:
             ${{ runner.os }}-terraform-
 
       - name: Setup Git credentials
-        run: git config --global url."https://oauth2:${{ secrets.GITHUB_TOKEN }}@github.com".insteadOf https://github.com
+        run: git config --global url."https://oauth2:${{ env.TOKEN }}@github.com".insteadOf https://github.com
           
       - name: Terraform init
         id: init
@@ -124,7 +125,7 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: trstringer/manual-approval@v1
         with:
-          secret: ${{ secrets.GITHUB_TOKEN }}
+          secret: ${{ env.TOKEN }}
           approvers: troynguyeen
           minimum-approvals: 1
           issue-title: "Deploying CodeBuild Terraform to ${{ env.TF_WORKSPACE_ENV }} on branch ${{ github.ref_name }}"
