@@ -14,7 +14,7 @@ data "aws_iam_policy_document" "assume_role" {
 resource "aws_iam_role" "role" {
   name               = local.codebuild_role_name
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
-  depends_on         = [data.aws_iam_policy_document.inline]
+  depends_on         = [data.aws_iam_policy_document.assume_role, data.aws_iam_policy_document.inline]
   tags = {
     Name = local.codebuild_role_name
   }
