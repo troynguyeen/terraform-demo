@@ -21,11 +21,12 @@ module "demo_codebuild" {
   enable_source_credential      = true
   source_credential_server_type = "GITHUB"
   source_credential_auth_type   = "CODECONNECTIONS"
-  source_credential_token       = "arn:aws:codeconnections:${var.region}:${data.aws_caller_identity.current.account_id}:connection/2b5d9d8f-f158-485a-84d3-d059c7bdccb3"
+  source_credential_token       = "arn:aws:codeconnections:${var.region}:${data.aws_caller_identity.current.account_id}:connection/8a6e955a-5628-4aa4-9931-4b83d55c054a"
 
   enable_codebuild_webhook = true
   webhook_build_type       = "BUILD"
   filter_group             = local.filter_group_local
+  scope_configuration      = local.scope_configuration_local
 
   tags = {
     Name = local.codebuild_name
@@ -74,6 +75,10 @@ locals {
     vpc_id             = data.aws_vpc.demo_vpc.id
     subnets            = data.aws_subnets.subnets.ids
     security_group_ids = data.aws_security_groups.sgs.ids
+  }
+  scope_configuration_local = {
+    name  = "troy-organization"
+    scope = "GITHUB_ORGANIZATION"
   }
   filter_group_local = {
     filter = [
