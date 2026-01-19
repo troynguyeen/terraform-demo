@@ -46,6 +46,9 @@ jobs:
         with:
           terraform_version: 1.14.0
 
+      - name: Setup Git credentials
+        run: git config --global url."https://oauth2:${{ env.TOKEN }}@github.com".insteadOf https://github.com
+
       - name: Terraform init
         id: init
         run: terraform init -backend-config="bucket=$BUCKET_TF_STATE"
