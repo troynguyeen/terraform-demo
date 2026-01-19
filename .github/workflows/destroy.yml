@@ -25,6 +25,7 @@ env:
   BUCKET_TF_STATE: demo-terraform-backend-state
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  TOKEN: ${{ secrets.TF_GITHUB_TOKEN }}
   
 jobs:
   terraform_destroy:
@@ -66,7 +67,7 @@ jobs:
         if: github.event.inputs.confirm_destroy == 'DESTROY' && github.ref == 'refs/heads/main'
         uses: trstringer/manual-approval@v1
         with:
-          secret: ${{ secrets.GITHUB_TOKEN }}
+          secret: ${{ env.TOKEN }}
           approvers: troynguyeen
           minimum-approvals: 1
           issue-title: "Final step to confirm Terraform destroy from ${{ github.event.inputs.environment }} on branch ${{ github.ref_name }}"
