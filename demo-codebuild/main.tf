@@ -21,7 +21,7 @@ module "demo_codebuild" {
   enable_source_credential      = true
   source_credential_server_type = "GITHUB"
   source_credential_auth_type   = "CODECONNECTIONS"
-  source_credential_token       = "arn:aws:codeconnections:${var.region}:${data.aws_caller_identity.current.account_id}:connection/2b5d9d8f-f158-485a-84d3-d059c7bdccb3"
+  source_credential_token       = "arn:aws:codeconnections:${var.region}:${data.aws_caller_identity.current.account_id}:connection/8a6e955a-5628-4aa4-9931-4b83d55c054a"
 
   enable_codebuild_webhook = true
   webhook_build_type       = "BUILD"
