@@ -6,7 +6,7 @@ module "demo_codebuild" {
   build_timeout               = 5
   queued_timeout              = 5
   source_type                 = "GITHUB"
-  source_location             = local.git_url
+# source_location             = local.git_url
   environment_type            = "LINUX_CONTAINER"
   compute_type                = "BUILD_GENERAL1_SMALL"
   image                       = "aws/codebuild/amazonlinux-x86_64-standard:5.0"
