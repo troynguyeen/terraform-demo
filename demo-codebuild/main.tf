@@ -26,6 +26,7 @@ module "demo_codebuild" {
   enable_codebuild_webhook = true
   webhook_build_type       = "BUILD"
   filter_group             = local.filter_group_local
+  scope_configuration      = local.scope_configuration_local
 
   tags = {
     Name = local.codebuild_name
@@ -74,6 +75,10 @@ locals {
     vpc_id             = data.aws_vpc.demo_vpc.id
     subnets            = data.aws_subnets.subnets.ids
     security_group_ids = data.aws_security_groups.sgs.ids
+  }
+  scope_configuration_local = {
+    name  = "troy-organization"
+    scope = "GITHUB_ORGANIZATION"
   }
   filter_group_local = {
     filter = [
