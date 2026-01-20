@@ -42,11 +42,6 @@ locals {
       name  = "SOME_KEY1"
       value = "SOME_VALUE1"
       type  = "PLAINTEXT"
-    },
-    {
-      name  = "SOME_KEY2"
-      value = "SOME_VALUE2"
-      type  = "PARAMETER_STORE"
     }
   ]
   artifacts_local = {
@@ -84,15 +79,7 @@ locals {
     filter = [
       {
         type    = "EVENT"
-        pattern = "PUSH"
-      },
-      {
-        type    = "EVENT"
         pattern = "WORKFLOW_JOB_QUEUED"
-      },
-      {
-        type    = "EVENT"
-        pattern = "PULL_REQUEST_CREATED"
       }
     ]
   }
