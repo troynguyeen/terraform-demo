@@ -19,10 +19,10 @@ provider "aws" {
   region = var.region
   default_tags {
     tags = {
-      Name        = "demo-codeconnections-tf"
-      Environment = "dev"
-      Terraform   = true
-      Modules     = true
+      Name        = var.name
+      Environment = terraform.workspace
+      Region      = var.region
+      ManagedBy   = "Terraform"
       Purpose     = "Demo CodeConnections by Terraform CI/CD"
     }
   }
