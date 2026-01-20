@@ -9,7 +9,7 @@ data "aws_vpc" "demo_vpc" {
 data "aws_subnets" "subnets" {
   filter {
     name   = "tag:Tier"
-    values = ["Public"]
+    values = ["Private"]
   }
 }
 
