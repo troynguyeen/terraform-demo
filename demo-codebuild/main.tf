@@ -21,7 +21,7 @@ module "demo_codebuild" {
   enable_source_credential      = true
   source_credential_server_type = "GITHUB"
   source_credential_auth_type   = "CODECONNECTIONS"
-  source_credential_token       = "arn:aws:codeconnections:${var.region}:${data.aws_caller_identity.current.account_id}:connection/8a6e955a-5628-4aa4-9931-4b83d55c054a"
+  source_credential_token       = data.terraform_remote_state.codeconnection.outputs.arn
 
   enable_codebuild_webhook = true
   webhook_build_type       = "BUILD"

@@ -1,3 +1,4 @@
+data "aws_caller_identity" "current" {}
 data "aws_vpc" "demo_vpc" {
   filter {
     name   = "tag:Name"
@@ -15,8 +16,16 @@ data "aws_subnets" "subnets" {
 data "aws_security_groups" "sgs" {
   filter {
     name   = "tag:Name"
-    values = ["caching-sg"]
+    values = ["CodeBuild-SecurityGroup"]
   }
 }
 
-data "aws_caller_identity" "current" {}
+data "terraform_remote_state" "codeconnection" {
+  backend = "s3"
+
+  config = {
+    bucket = "demo-terraform-backend-state"
+    key    = "env:/${terraform.workspace}/code_connections/terraform.tfstate"
+    region = "ap-southeast-1"
+  }
+}
