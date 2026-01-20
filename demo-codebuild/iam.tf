@@ -63,6 +63,8 @@ locals {
           "ec2:DescribeSubnets",
           "ec2:DescribeSecurityGroups",
           "ec2:DescribeVpcs",
+          "ec2:DescribeVpcAttribute",
+          "ec2:DescribeDhcpOptions"
         ]
         resources = ["*"]
       }
