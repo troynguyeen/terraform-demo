@@ -19,10 +19,11 @@ provider "aws" {
   region = var.region
   default_tags {
     tags = {
+      Name        = var.name
       Environment = terraform.workspace
       Region      = var.region
       ManagedBy   = "Terraform"
-      Purpose     = local.description
+      Purpose     = "Demo CodeConnections by Terraform CI/CD"
     }
   }
 }
