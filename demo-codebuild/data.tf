@@ -24,7 +24,7 @@ data "terraform_remote_state" "codeconnection" {
   backend = "s3"
 
   config = {
-    bucket = "sympli-tf"
+    bucket = "demo-terraform-backend-state"
     key    = "env:/${terraform.workspace}/code_connections/terraform.tfstate"
     region = "ap-southeast-1"
   }
