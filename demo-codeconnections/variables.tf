@@ -7,11 +7,11 @@ variable "region" {
 variable "name" {
   description = "The name of the CodeConnections connection"
   type        = string
-  default     = "demo-github-connection"
+  default     = ""
 }
 
 variable "provider_type" {
   description = "The provider type for the CodeConnections connection"
   type        = string
-  default     = "GitHub"
+  default     = ""
 }
