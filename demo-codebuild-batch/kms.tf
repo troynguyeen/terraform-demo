@@ -1,5 +1,5 @@
 resource "aws_kms_key" "demo_kms" {
-  description             = local.sharing_vars.common.description
+  description             = local.sharing_vars.common.codebuild_kms_description
   rotation_period_in_days = local.sharing_vars.common.rotation_period_in_days
   enable_key_rotation     = true
 

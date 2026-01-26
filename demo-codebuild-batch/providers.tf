@@ -7,7 +7,7 @@ terraform {
   }
   backend "s3" {
     bucket       = "demo-terraform-backend-state"
-    key          = "${terraform.workspace}/codebuild.tfstate"
+    key          = "codebuild.tfstate"
     region       = "ap-southeast-1"
     encrypt      = false
     use_lockfile = true

@@ -29,5 +29,5 @@ resource "aws_s3_bucket_ownership_controls" "artifacts" {
 }
 
 locals {
-  artifacts = lookup(local.vars.codebuild, "organization", "") == terraform.workspace ? [local.vars.codebuild] : []
+  artifacts = lookup(local.vars.codebuild, "organization", "") == terraform.workspace ? local.vars : {}
 }

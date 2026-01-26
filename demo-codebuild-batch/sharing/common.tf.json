@@ -1,5 +1,5 @@
 {
     "codebuild_kms_name": "sympli-shared-prod-aps2-codebuild-kms",
-    "codebuild_description": "An example symmetric encryption KMS key for CodeBuild",
+    "codebuild_kms_description": "An example symmetric encryption KMS key for CodeBuild",
     "rotation_period_in_days": 90
 }

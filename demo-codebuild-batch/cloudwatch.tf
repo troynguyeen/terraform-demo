@@ -23,5 +23,5 @@ resource "aws_cloudwatch_log_group" "demo-cd-log" {
 }
 
 locals {
-  logs = lookup(local.vars.codebuild, "organization", "") == terraform.workspace ? [local.vars.codebuild] : []
+  logs = lookup(local.vars.codebuild, "organization", "") == terraform.workspace ? local.vars : {}
 }

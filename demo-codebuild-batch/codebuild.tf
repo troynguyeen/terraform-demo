@@ -25,7 +25,7 @@ module "demo-ci" {
   vpc_config                    = local.vpc_config
 
   tags = {
-    Name = "${each.value.prod_name_prefix}-cd"
+    Name = "${each.value.prod_name_prefix}-ci"
   }
 }
 
@@ -61,5 +61,5 @@ module "demo-cd" {
 }
 
 locals {
-  codebuilds = lookup(local.vars.codebuild, "organization", "") == terraform.workspace ? [local.vars.codebuild] : []
+  codebuilds = lookup(local.vars.codebuild, "organization", null) == terraform.workspace ? local.vars : {}
 }
