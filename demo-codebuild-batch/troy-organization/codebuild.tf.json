@@ -1,0 +1,62 @@
+{
+    "organization": "troy-organization",
+    "prod_name_prefix": "troy-organization-demo-codebuild-tf-prod",
+    "non_prod_name_prefix": "troy-organization-demo-codebuild-tf-non-prod",
+    "description": "This CodeBuild project is used for troy-organization organization",
+    "source_location": "CODEBUILD_DEFAULT_WEBHOOK_SOURCE_LOCATION",
+    "source_type": "GITHUB",
+    "enable_source_credential": true,
+    "source_credential_auth_type": "CODECONNECTIONS",
+    "environment_type": "LINUX_CONTAINER",
+    "compute_type": "BUILD_GENERAL1_MEDIUM",
+    "image": "aws/codebuild/amazonlinux-x86_64-standard:5.0",
+    "image_pull_credentials_type": "CODEBUILD",
+    "enable_codebuild_webhook": true,
+    "webhook_build_type": "BUILD",
+    "filter_group": {
+        "filter": [
+            {
+                "type": "EVENT",
+                "pattern": "WORKFLOW_JOB_QUEUED"
+            }
+        ]
+    },
+    "scope_configuration": {
+        "name": "troy-organization",
+        "scope": "GITHUB_ORGANIZATION"
+    },
+    "artifacts": {
+        "type": "S3",
+        "location": "troy-organization-demo-codebuild-tf-share-artifacts",
+        "namespace_type": "BUILD_ID",
+        "path": "artifacts"
+    },
+    "cache": {
+        "type": "S3",
+        "location": "troy-organization-demo-codebuild-tf-share-cache",
+        "path": "cache"
+    },
+    "logs_config": {
+        "cloudwatch_logs": {
+            "status": "ENABLED",
+            "retention_in_days": 30
+        }
+    },
+    "environment_variables": [
+        {
+            "name": "HTTP_PROXY",
+            "value": "http://troynguyeen-demo.vn:80",
+            "type": "PLAINTEXT"
+        },
+        {
+            "name": "HTTPS_PROXY",
+            "value": "http://troynguyeen-demo.vn:80",
+            "type": "PLAINTEXT"
+        },
+        {
+            "name": "NO_PROXY",
+            "value": "127.0.0.1,localhost,::1",
+            "type": "PLAINTEXT"
+        }
+    ]
+}

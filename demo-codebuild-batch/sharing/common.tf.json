@@ -1,0 +1,6 @@
+{
+    "codebuild_role_name": "troy-organization-demo-codebuild-tf-share-role",
+    "codebuild_kms_name": "troy-organization-demo-codebuild-tf-share-kms",
+    "codebuild_kms_description": "An example symmetric encryption KMS key for CodeBuild",
+    "rotation_period_in_days": 90
+}
