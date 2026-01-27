@@ -12,11 +12,11 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_role" "role" {
-  name               = local.codebuild_role_name
+  name               = local.sharing_vars.common.codebuild_role_name
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
   depends_on         = [data.aws_iam_policy_document.assume_role, data.aws_iam_policy_document.inline]
   tags = {
-    Name = local.codebuild_role_name
+    Name = local.sharing_vars.common.codebuild_role_name
   }
 }
 
@@ -49,7 +49,6 @@ data "aws_iam_policy_document" "inline" {
 }
 
 locals {
-  codebuild_role_name = "demo-codebuild-role"
   inline_policy_statements = {
     Networking = [
       {
@@ -90,8 +89,8 @@ locals {
           "s3:ListBucket",
         ]
         resources = [
-          aws_s3_bucket.artifacts.arn,
-          "${aws_s3_bucket.artifacts.arn}/*"
+          aws_s3_bucket.artifacts[terraform.workspace].arn,
+          "${aws_s3_bucket.artifacts[terraform.workspace].arn}/*"
         ]
       }
     ]

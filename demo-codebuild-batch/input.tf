@@ -9,3 +9,7 @@ locals {
     security_group_ids = data.aws_security_groups.sgs.ids
   }
 }
+
+locals {
+  troy-organization = terraform.workspace == "troy-organization" ? { for v in local.vars : terraform.workspace => v } : {}
+}

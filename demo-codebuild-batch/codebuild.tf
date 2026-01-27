@@ -1,5 +1,5 @@
 module "demo-ci" {
-  for_each                      = local.codebuilds
+  for_each                      = local.troy-organization
   source                        = "github.com/troynguyeen/terraform-module//codebuild"
   name                          = "${each.value.prod_name_prefix}-ci"
   description                   = each.value.description
@@ -30,7 +30,7 @@ module "demo-ci" {
 }
 
 module "demo-cd" {
-  for_each                      = local.codebuilds
+  for_each                      = local.troy-organization
   source                        = "github.com/troynguyeen/terraform-module//codebuild"
   name                          = "${each.value.prod_name_prefix}-cd"
   description                   = each.value.description
@@ -58,8 +58,4 @@ module "demo-cd" {
   tags = {
     Name = "${each.value.prod_name_prefix}-cd"
   }
-}
-
-locals {
-  codebuilds = lookup(local.vars.codebuild, "organization", null) == terraform.workspace ? local.vars : {}
 }
